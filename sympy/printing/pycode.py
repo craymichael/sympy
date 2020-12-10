@@ -425,6 +425,11 @@ class AbstractPythonCodePrinter(CodePrinter):
         exp_str = self.parenthesize(expr.exp, PREC, strict=False)
         return "{}**{}".format(base_str, exp_str)
 
+    def _print_Contains(self, expr):
+        """Converts a `Contains()` object into relational expressions"""
+        value, set_ = expr.args
+        return self._print(set_.as_relational(value))
+
 
 class PythonCodePrinter(AbstractPythonCodePrinter):
 
