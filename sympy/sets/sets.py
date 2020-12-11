@@ -2066,6 +2066,10 @@ class DisjointUnion(Set):
                 iter_flag = iter_flag and set_i.is_iterable
         return iter_flag
 
+    def as_relational(self, x):
+        """Rewrite a Range in terms of equalities and logic operators. """
+        return self.rewrite(Union).as_relational(x)
+
     def _eval_rewrite_as_Union(self, *sets):
         """
         Rewrites the disjoint union as the union of (``set`` x {``i``})
