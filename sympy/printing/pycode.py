@@ -428,7 +428,13 @@ class AbstractPythonCodePrinter(CodePrinter):
     def _print_Contains(self, expr):
         """Converts a `Contains()` object into relational expressions"""
         value, set_ = expr.args
-        return self._print(set_.as_relational(value))
+        if hasattr(set_, 'as_relational'):
+            return self._print(set_.as_relational(value))
+        else:
+            raise NotImplementedError(
+                'Sets without the `as_relational` method are currently not '
+                'supported for numerical evaluation with '
+                '`Contains`: {}'.format(expr))
 
 
 class PythonCodePrinter(AbstractPythonCodePrinter):
