@@ -6,7 +6,7 @@ from sympy.core.expr import Expr
 from sympy.core.function import Lambda
 from sympy.core.logic import fuzzy_not, fuzzy_or, fuzzy_and
 from sympy.core.numbers import oo, Integer
-from sympy.core.relational import Eq
+from sympy.core.relational import Eq, Lt
 from sympy.core.singleton import Singleton, S
 from sympy.core.symbol import Dummy, symbols, Symbol
 from sympy.core.sympify import _sympify, sympify, converter
@@ -1431,3 +1431,9 @@ class Complexes(CartesianComplexRegion, metaclass=Singleton):
 
     def __repr__(self):
         return "S.Complexes"
+
+    def as_relational(self, x):
+        from sympy.functions.elementary.complexes import Abs
+        abs_x = Abs(x)
+        return And(Lt(-oo, abs_x, evaluate=False),
+                   Lt(abs_x, oo, evaluate=False))
