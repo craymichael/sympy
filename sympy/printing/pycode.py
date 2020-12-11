@@ -426,7 +426,9 @@ class AbstractPythonCodePrinter(CodePrinter):
         return "{}**{}".format(base_str, exp_str)
 
     def _print_Contains(self, expr):
-        """Converts a `Contains()` object into relational expressions"""
+        """Converts a `Contains()` object into relational expressions
+        See discussion in issue #20563
+        """
         value, set_ = expr.args
         if hasattr(set_, 'as_relational'):
             # This can still fail if a set/union contains a set without this
