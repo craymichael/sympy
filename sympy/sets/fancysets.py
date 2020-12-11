@@ -1433,6 +1433,7 @@ class Complexes(CartesianComplexRegion, metaclass=Singleton):
         return "S.Complexes"
 
     def as_relational(self, x):
+        """Rewrite a Range in terms of equalities and logic operators. """
         from sympy.functions.elementary.complexes import Abs
         abs_x = Abs(x)
         return And(Lt(-oo, abs_x, evaluate=False),
