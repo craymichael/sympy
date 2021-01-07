@@ -766,10 +766,10 @@ class NumPyPrinter(PythonCodePrinter):
 
     def _print_Piecewise(self, expr):
         "Piecewise function printer"
-        exprs = '[{}]'.format(
-            ','.join('numpy.asarray({}).astype(numpy.bool)'.format(self._print(arg.expr))
+        exprs = '[{}]'.format(','.join(self._print(arg.expr) for arg in expr.args))
+        conds = '[{}]'.format(
+            ','.join('numpy.asarray({}).astype(numpy.bool)'.format(self._print(arg.cond))
                      for arg in expr.args))
-        conds = '[{}]'.format(','.join(self._print(arg.cond) for arg in expr.args))
         # If [default_value, True] is a (expr, cond) sequence in a Piecewise object
         #     it will behave the same as passing the 'default' kwarg to select()
         #     *as long as* it is the last element in expr.args.
